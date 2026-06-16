@@ -43,5 +43,5 @@ def test_image():
     )
 
     return {
-        "output": output
+        "image_url": str(output[0])
     }
