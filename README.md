@@ -129,7 +129,7 @@ SketchAI/
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/SketchAI.git
+git clone https://github.com/shayan-rehmani/SketchAI.git
 
 cd SketchAI
 ```
