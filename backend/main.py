@@ -1,8 +1,8 @@
 from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 from dotenv import load_dotenv
 import replicate
-
 # Load .env file
 load_dotenv()
 
@@ -18,30 +18,32 @@ def home():
 
 @app.post("/generate-image")
 async def generate_image(
-    prompt: str = Form(...),
-    reference_image: Optional[UploadFile] = File(None)
+    prompt: str = Form(...)
 ):
-    return {
-        "success": True,
-        "prompt": prompt,
-        "reference_image": (
-            reference_image.filename
-            if reference_image
-            else None
+    try:
+
+        output = replicate.run(
+            "openai/gpt-image-2",
+            input={
+                "prompt": prompt
+            }
         )
-    }
 
-
-@app.get("/test-image")
-def test_image():
-
-    output = replicate.run(
-        "openai/gpt-image-2",
-        input={
-            "prompt": "A futuristic cyberpunk city at sunset"
+        return {
+            "success": True,
+            "image_url": str(output[0])
         }
-    )
 
-    return {
-        "image_url": str(output[0])
-    }
+    except Exception as e:
+
+        return {
+            "success": False,
+            "error": str(e)
+        }
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
