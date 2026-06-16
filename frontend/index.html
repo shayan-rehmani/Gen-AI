@@ -1,36 +1,207 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>SketchAI</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+    <link
+        rel="shortcut icon"
+       href="assets/logo.ico"
+    >
+
 </head>
+
 <body>
 
-    <div class="container">
-        <h1>SketchAI</h1>
-        <p>Create AI images from text or a reference image.</p>
+    <div class="app">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <button
+                id="toggleSidebar"
+                class="toggle-sidebar"
+            >
+                ☰
+            </button>
+
+            <div class="logo">
+                <img
+                    src="assets/logo.png"
+                    alt="SketchAI Logo"
+                    class="logo-image"
+                >
+            </div>
+
+            <button
+                id="newChatBtn"
+                class="new-chat-btn"
+            >
+                + New Chat
+            </button>
+
+            <div class="history-title">
+                Recent Chats
+            </div>
+
+            <div id="historyList">
+
+            </div>
+
+        </aside>
+
+        <!-- MAIN CHAT AREA -->
+
+        <main class="main-content">
+
+            <div
+                id="chatContainer"
+                class="chat-container"
+            >
+
+                <div class="welcome-screen">
+
+                    <h1>
+                        <img
+                            src="assets/logo.png"
+                            alt="SketchAI Logo"
+                            class="logo-image"
+                        >
+                    </h1>
+
+                    <p>
+                        What would you like to create today?
+                    </p>
+
+                    <div class="suggestions">
+
+                        <button
+                            class="suggestion-btn"
+                        >
+                            Cyberpunk City
+                        </button>
+
+                        <button
+                            class="suggestion-btn"
+                        >
+                            Anime Character
+                        </button>
+
+                        <button
+                            class="suggestion-btn"
+                        >
+                            Fantasy Castle
+                        </button>
+
+                        <button
+                            class="suggestion-btn"
+                        >
+                            Logo Design
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- FIXED INPUT BAR -->
+
+    <div class="input-container">
+
+        <div class="upload-wrapper">
+
+            <button
+                id="uploadBtn"
+                class="icon-btn"
+            >
+                +
+            </button>
+
+            <div
+                id="uploadMenu"
+                class="upload-menu"
+            >
+
+                <button
+                    id="selectImageBtn"
+                >
+                    Upload Image
+                </button>
+
+                <div id="dropZone">
+                    Drag & Drop Image Here
+                </div>
+
+            </div>
+
+            <input
+                type="file"
+                id="referenceImage"
+                accept="image/*"
+                hidden
+            >
+
+        </div>
 
         <textarea
             id="prompt"
-            placeholder="Describe the image you want..."
+            placeholder="Describe anything..."
         ></textarea>
 
-        <input
-            type="file"
-            id="referenceImage"
-            accept="image/*"
+        <button
+            id="generateBtn"
+            class="send-btn"
         >
-
-        <button id="generateBtn">
-            Generate Image
+            →
         </button>
 
-        <div id="result">
-            Generated image will appear here
-        </div>
+    </div>
+
+    <!-- IMAGE PREVIEW -->
+
+    <div id="imagePreview">
+
+    </div>
+
+    <!-- FULLSCREEN IMAGE MODAL -->
+
+    <div
+        id="imageModal"
+        class="image-modal"
+    >
+
+        <span id="closeModal">
+            ×
+        </span>
+
+        <img
+            id="modalImage"
+            class="modal-image"
+            alt="Generated Image"
+        >
+
     </div>
 
     <script src="script.js"></script>
 
 </body>
+
 </html>
