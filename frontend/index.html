@@ -1,1 +1,36 @@
-<h1>SketchAI</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SketchAI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>SketchAI</h1>
+        <p>Create AI images from text or a reference image.</p>
+
+        <textarea
+            id="prompt"
+            placeholder="Describe the image you want..."
+        ></textarea>
+
+        <input
+            type="file"
+            id="referenceImage"
+            accept="image/*"
+        >
+
+        <button id="generateBtn">
+            Generate Image
+        </button>
+
+        <div id="result">
+            Generated image will appear here
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
