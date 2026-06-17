@@ -4,16 +4,21 @@ from fastapi.responses import StreamingResponse
 from typing import Optional
 from dotenv import load_dotenv
 
-import replicate
-import requests
-import tempfile
+import os
 import io
+import tempfile
+import traceback
+import requests
+import replicate
 
 # =========================
 # LOAD ENV
 # =========================
 
 load_dotenv()
+
+# Increase Replicate timeout
+os.environ["REPLICATE_HTTP_TIMEOUT"] = "300"
 
 app = FastAPI()
 
@@ -50,8 +55,10 @@ async def generate_image(
 ):
     try:
 
+        print("\n====================")
         print("Prompt:", prompt)
 
+        # IMAGE EDITING MODE
         if reference_image:
 
             print(
@@ -75,28 +82,24 @@ async def generate_image(
             ) as temp_file:
 
                 temp_file.write(image_bytes)
-
                 temp_path = temp_file.name
 
-            print(
-                "Using image editing mode"
-            )
+            print("Using image editing mode")
 
-            output = replicate.run(
-                "openai/gpt-image-2",
-                input={
-                    "prompt": prompt,
-                    "input_images": [
-                        open(temp_path, "rb")
-                    ]
-                }
-            )
+            with open(temp_path, "rb") as img:
 
+                output = replicate.run(
+                    "openai/gpt-image-2",
+                    input={
+                        "prompt": prompt,
+                        "input_images": [img]
+                    }
+                )
+
+        # TEXT TO IMAGE MODE
         else:
 
-            print(
-                "No image uploaded"
-            )
+            print("No image uploaded")
 
             output = replicate.run(
                 "openai/gpt-image-2",
@@ -104,6 +107,8 @@ async def generate_image(
                     "prompt": prompt
                 }
             )
+
+        print("Generation successful")
 
         return {
             "success": True,
@@ -117,7 +122,9 @@ async def generate_image(
 
     except Exception as e:
 
-        print("ERROR:", e)
+        print("\n========== ERROR ==========")
+        traceback.print_exc()
+        print("===========================\n")
 
         return {
             "success": False,
@@ -145,9 +152,9 @@ def download_image(url: str):
 
     return StreamingResponse(
         io.BytesIO(response.content),
-        media_type="image/png",
+        media_type="application/octet-stream",
         headers={
             "Content-Disposition":
-            "attachment; filename=sketchai-image.png"
+            "attachment; filename=sketchai-image.webp"
         }
     )

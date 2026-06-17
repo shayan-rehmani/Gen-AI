@@ -497,3 +497,8 @@ textarea{
     height:200px;
     object-fit:contain;
 }
+.welcome-logo{
+    width:250px;
+    height:auto;
+    margin-bottom:20px;
+}

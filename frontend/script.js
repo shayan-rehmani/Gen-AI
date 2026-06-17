@@ -73,8 +73,11 @@ newChatBtn.addEventListener(
         chatContainer.innerHTML = `
             <div class="welcome-screen">
 
-                <h1>SketchAI</h1>
-
+                <img
+                    src="assets/logo.png"
+                    class="welcome-logo"
+                    alt="SketchAI"
+                >
                 <p>
                     What would you like to create today?
                 </p>
